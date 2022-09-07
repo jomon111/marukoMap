@@ -1,0 +1,20 @@
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#map {
+    z-index: 0;
+    height: 100%;
+}
+
+.control-window{
+    width:80%;
+    height: auto;
+}
+
+.leaflet-container {
+background-image: url(../assets/back.jpg);
+outline: 0;
+}

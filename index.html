@@ -1,0 +1,61 @@
+<!-- 参考・使用したプラグイン等
+■参考
+    Leaflet document - URL:https://leafletjs.com/reference.html
+    Leaflet #012–外部ファイルのGeoJSONでマーカー表示2 - URL:https://day-journal.com/memo/leaflet-012/
+    Leaflet #043-移動できる範囲を指定 - URL:https://day-journal.com/memo/leaflet-043/
+    Leafletのマーカー（アイコン）にgeoJSONから読み込んだデータ（番号・数字・文字列）を表示する - URL:https://qiita.com/hiro-ishi/items/970581499b27f14a8a38
+    Leaflet入門｜プラグインでメッセージウィンドウを表示する（control-window） - URL:https://kita-note.com/leaflet-plugin-control-window
+■プラグイン
+    domoritz/leaflet-locatecontrol - URL:https://github.com/domoritz/leaflet-locatecontrol 
+    lennardv2/Leaflet.awesome-markers - URL:https://github.com/lennardv2/Leaflet.awesome-markers
+    targomo/Leaflet.CondensedAttribution - URL:https://github.com/targomo/Leaflet.CondensedAttribution
+    consbio/Leaflet.HtmlLegend - URL:https://github.com/consbio/Leaflet.HtmlLegend
+-->
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-site-verification" content="n4nqlm5FbVpFSoG2UeX6VF3PBvqpXSpcyv2yuQnhPxU" />
+    <title>The maruko's map</title>
+    <meta name="description" content="地元鹿児島のハザードマップがなんだか使いにくいなあと思い、作ってみました。素敵な河川カメラも公開されていたので、位置を探して落とし込みました！いつも通っている道を確認してみましょう。" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <link href="./src/stylesheet.css" rel="stylesheet"/>
+    <script src="./assets/livecam.geojson"></script>
+
+    <!-- https://github.com/domoritz/leaflet-locatecontrol -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+    <script src="./plugin/leaflet-locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+
+    <!-- https://github.com/lennardv2/Leaflet.awesome-markers -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="./plugin/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
+    <script src="./plugin/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
+
+    <!-- https://github.com/targomo/Leaflet.CondensedAttribution -->
+    <link rel="stylesheet" href="./plugin/Leaflet.CondensedAttribution/dist/leaflet-control-condended-attribution.css" />
+    <script type="text/javascript" src="./plugin/Leaflet.CondensedAttribution/dist/leaflet-control-condended-attribution.js"></script>
+    
+    <!-- https://github.com/consbio/Leaflet.HtmlLegend -->
+    <link rel="stylesheet" href="./plugin/Leaflet.HtmlLegend/dist/L.Control.HtmlLegend.css"/>
+    <script src="./plugin/Leaflet.HtmlLegend/dist/L.Control.HtmlLegend.js"></script>
+
+    <!-- https://github.com/mapshakers/leaflet-control-window -->
+    <link rel="stylesheet" href="./plugin/leaflet-control-window/src/L.Control.Window.css" />
+    <script src="./plugin/leaflet-control-window/src/L.Control.Window.js"></script>
+
+    <!-- https://github.com/CliffCloud/Leaflet.EasyButton -->
+    <link rel='stylesheet' href='./plugin/Leaflet.EasyButton/src/easy-button.css'/>
+    <script src='./plugin/Leaflet.EasyButton/src/easy-button.js'></script>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script src="./src/script.js"></script>
+</body>
+</html>
