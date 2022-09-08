@@ -84,7 +84,6 @@ L.control.condensedAttribution({
 // 現在地表示ボタンーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 var watch_id = 0;
 var curMarker = null;	// 現在地マーカー
-var currentWatchBtn = null;
 L.easyButton({		// 現在地表示ボタン
 	states: [{
 		stateName: 'current-watch',
@@ -93,7 +92,6 @@ L.easyButton({		// 現在地表示ボタン
 		onClick: function(btn, mymap) {
 			currentWatch();
 			btn.state('current-watch-reset');
-			currentWatchBtn = btn;
 		}
 	},{
 		stateName: 'current-watch-reset',
@@ -107,11 +105,15 @@ L.easyButton({		// 現在地表示ボタン
 }).addTo( mymap );
 
 function currentWatch() {
+	var count = 0;
 	function success(pos) {
+		// 現在地に表示するマーカー
 		var lat = pos.coords.latitude;
 		var lng = pos.coords.longitude;
-		mymap.setView([ lat,lng ]);
-		// 現在地に表示するマーカー
+		if(count==0){
+			mymap.setView([lat,lng])
+			count+=1;
+		}
 		if (curMarker) {
 			mymap.removeLayer(curMarker);
 		}
