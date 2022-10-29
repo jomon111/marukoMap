@@ -33,6 +33,15 @@ let mymap = L.map('map',{
     condensedAttributionControl: false
 });
 
+//ベースマップ
+let baseLayers = {
+    "地理院地図 標準": gsi,
+    "地理院地図 淡色": gsi_awai,
+    "地理院地図 衛星画像": gsi_eisei,
+    "OpenStreetMap 標準": osm,
+    "イラストマップ":illust
+};
+
 /*ライブカメラ位置、オーバレイ画像
 let liveCam = L.geoJSON(livecam,{
     onEachFeature: function(feature, layer){
@@ -60,19 +69,34 @@ let sanchanIcon = L.icon({
 	popupAnchor:[30,-40],
 });
 
-let mapMarker = L.marker([35.58087642829406, 139.66117135010086],{icon:sanchanIcon}).addTo(mymap).bindPopup('三ちゃん食堂');
+let sanchanMarker = L.marker([35.58087642829406, 139.66117135010086],{icon:sanchanIcon}).addTo(mymap).bindPopup('三ちゃん食堂');
 
-//ベースマップ
-let baseLayers = {
-    "地理院地図 標準": gsi,
-    "地理院地図 淡色": gsi_awai,
-    "地理院地図 衛星画像": gsi_eisei,
-    "OpenStreetMap 標準": osm,
-    "イラストマップ":illust
-};
+let originIcon = L.icon({
+    iconUrl:'./assets/origin.png',
+	iconRetinaUrl:'./assets/origin.png',
+	iconSize:[180,150],
+	iconAnchor:[50,80],
+	popupAnchor:[30,-40],
+});
+
+let originMarker = L.marker([35.580664482796095, 139.6614550727053],{icon:originIcon}).addTo(mymap).bindPopup('オリジン弁当');
+
+let doutorIcon = L.icon({
+    iconUrl:'./assets/doutor.png',
+	iconRetinaUrl:'./assets/doutor.png',
+	iconSize:[180,150],
+	iconAnchor:[50,80],
+	popupAnchor:[30,-40],
+})
+
+let doutorMarker = L.marker([35.58038496006569, 139.66214623853003],{icon:doutorIcon}).addTo(mymap).bindPopup('ドトールコーヒー');
+
+
 //オーバレイ
 let overLayers = {
     "食堂": mapMarker,
+    "弁当": originMarker,
+    "カフェ": doutorMarker
 };
 
 //レイヤコントール追加
