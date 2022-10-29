@@ -5,7 +5,7 @@ var osm = new L.TileLayer(osmUrl, {
     detectRetina: true
 });
 
-// please replace this with your own mapbox token!
+/* please replace this with your own mapbox token!
 var token = 'pk.eyJ1IjoiZG9tb3JpdHoiLCJhIjoiY2s4a2d0OHp3MDFxMTNmcWoxdDVmdHF4MiJ9.y9-0BZCXJBpNBzEHxhFq1Q';
 var mapboxUrl = 'https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/{z}/{x}/{y}@2x?access_token=' + token;
 var mapboxAttrib = 'Map data © <a href="http://osm.org/copyright">OpenStreetMap</a> contributors. Tiles from <a href="https://www.mapbox.com">Mapbox</a>.';
@@ -14,6 +14,7 @@ var mapbox = new L.TileLayer(mapboxUrl, {
   tileSize: 512,
   zoomOffset: -1
 });
+*/
 
 var map = new L.Map('map', {
     tap: false, // ref https://github.com/Leaflet/Leaflet/issues/7255

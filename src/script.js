@@ -16,7 +16,24 @@ let illust = new L.tileLayer('./tiles/{z}/{x}/{y}.png',{
     minZoom:18
 });
 
-//ライブカメラ位置、オーバレイ画像
+let area = [
+    [35.582913855357226, 139.6599040062763],
+    [35.577992529653805, 139.66467833846545]
+];
+
+//マップのオプションたち
+let mymap = L.map('map',{
+    center:[35.580488133313, 139.66186738328818],
+    zoom:19,
+    maxZoom:20,
+    minZoom:18,
+    //maxBounds: area,
+    zoomControl:true,
+    layers:[illust],
+    condensedAttributionControl: false
+});
+
+/*ライブカメラ位置、オーバレイ画像
 let liveCam = L.geoJSON(livecam,{
     onEachFeature: function(feature, layer){
         layer.bindPopup('<a href="'+ feature.properties.URL + '">' + feature.properties.名称 + 'の河川カメラ' + '</a>');
@@ -32,16 +49,18 @@ let liveCam = L.geoJSON(livecam,{
     },
     attribution: "<a href='http://www3.doboku-bousai.pref.kagoshima.jp/bousai/jsp/index.jsp'>鹿児島県土木部</a>※位置は個人調査"
 });
+*/
 
 //マーカー
 let sanchanIcon = L.icon({
 	iconUrl:'./assets/sanchan.png',
 	iconRetinaUrl:'./assets/sanchan.png',
-	iconSize:[100,100],
+	iconSize:[180,150],
 	iconAnchor:[50,80],
-	popupAnchor:[0,-70]
+	popupAnchor:[30,-40],
 });
-let comment = '三ちゃん食堂';
+
+let mapMarker = L.marker([35.58087642829406, 139.66117135010086],{icon:sanchanIcon}).addTo(mymap).bindPopup('三ちゃん食堂');
 
 //ベースマップ
 let baseLayers = {
@@ -53,25 +72,9 @@ let baseLayers = {
 };
 //オーバレイ
 let overLayers = {
-    "河川ライブカメラ": liveCam,
+    "食堂": mapMarker,
 };
 
-let area = [
-    [35.582913855357226, 139.6599040062763],
-    [35.577992529653805, 139.66467833846545]
-];
-
-//マップのオプションたち
-let mymap = L.map('map',{
-    center:[35.580488133313, 139.66186738328818],
-    zoom:18,
-    maxZoom:20,
-    minZoom:18,
-    //maxBounds: area,
-    zoomControl:true,
-    layers:[illust],
-    condensedAttributionControl: false
-});
 //レイヤコントール追加
 L.control.layers(baseLayers,overLayers).addTo(mymap);
 
@@ -81,72 +84,24 @@ L.control.condensedAttribution({
     prefix: '<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | <a href="https://github.com/jomon111/kagoshima-hazard">Github</a>'
   }).addTo(mymap);
 
-// 現在地表示ボタンーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-var watch_id = 0;
-var curMarker = null;	// 現在地マーカー
-L.easyButton({		// 現在地表示ボタン
-	states: [{
-		stateName: 'current-watch',
-		icon:	'fas fa-map-marker-alt',
-		title:	 '現在地',
-		onClick: function(btn, mymap) {
-			currentWatch();
-			btn.state('current-watch-reset');
-		}
-	},{
-		stateName: 'current-watch-reset',
-		icon:	'fa fa-street-view',
-		title:	 '現在地オフ',
-		onClick: function(btn, mymap) {
-			currentWatchReset();
-			btn.state('current-watch');
-		}
-	}]
-}).addTo( mymap );
-
-function currentWatch() {
-	var count = 0;
-	function success(pos) {
-		// 現在地に表示するマーカー
-		var lat = pos.coords.latitude;
-		var lng = pos.coords.longitude;
-		if(count==0){
-			mymap.setView([lat,lng])
-			count+=1;
-		}
-		if (curMarker) {
-			mymap.removeLayer(curMarker);
-		}
-		var curIcon = L.icon({	/* アイコン */
-			iconUrl: './assets/test.gif',
-			iconRetinaUrl: './assets/test.gif',
-			iconSize: [40, 40]
-		});
-		curMarker = L.marker([lat, lng], {icon: curIcon}).addTo(mymap);
-	}
-	function error(err) {
-		alert('位置情報を取得できませんでした。');
-	}
-	var options = {
-		enableHighAccuracy: true,
-		timeout: 5000,
-		maximumAge: 0
-	};
-	if (watch_id == 0) {
-		watch_id = navigator.geolocation.watchPosition(success, error, options); // 現在地情報を定期的に
-	}
-}
-function currentWatchReset() {
-	if (watch_id > 0) {
-		navigator.geolocation.clearWatch(watch_id);
-		watch_id = 0;
-	}
-	if (curMarker) {
-		mymap.removeLayer(curMarker);
-		curMarker = null;
-	}
-}
-
+// 現在地表示プラグインーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+let lc = L.control.locate({
+    flyTo:true,
+    strings: {
+        title: "現在地を表示する",
+    },
+    showPopup:false,
+    onLocationError(){
+        alert('現在地が見つかりません');
+    },
+    markerStyle:{
+        iconURL:'../spinner-solid.svg'
+    }
+    /*onLocationOutsideMapBounds(){
+        alert('あなたは新丸子にいないよ！');
+        lc.stop();
+    },*/
+}).addTo(mymap);
 
 //ダイアログプラグインーーーーーーーーーーーーーーーーーーーーーーーーーーーー
     var options = {
@@ -161,6 +116,4 @@ function currentWatchReset() {
         //OKボタンを押したら初期から現在地を探す
         }}).show()
 
-let mapMarker = L.marker([35.58087642829406, 139.66117135010086],{icon:sanchanIcon}).addTo(mymap);
-mapMarker.bindPopup(comment).openPopup();
 		
