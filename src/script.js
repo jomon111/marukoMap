@@ -94,7 +94,7 @@ let doutorMarker = L.marker([35.58038496006569, 139.66214623853003],{icon:doutor
 
 //オーバレイ
 let overLayers = {
-    "食堂": mapMarker,
+    "食堂": sanchanMarker,
     "弁当": originMarker,
     "カフェ": doutorMarker
 };
